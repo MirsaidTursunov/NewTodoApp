@@ -7,7 +7,6 @@ import 'package:new_todo_app/features/add_event/page/mixins/add_tasks_mixin.dart
 import 'package:new_todo_app/features/add_event/widgets/custom_text_field.dart';
 import 'package:new_todo_app/features/home/data/data_source/local_source.dart';
 import 'package:new_todo_app/features/home/data/floor/entity/tasks.dart';
-import 'package:new_todo_app/router/name_routes.dart';
 
 class AddEventPage extends StatefulWidget {
   final AddPageArguments? args;
@@ -76,10 +75,7 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                                 context: context,
                                 position: RelativeRect.fromLTRB(
                                   16,
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height - 280,
+                                  MediaQuery.of(context).size.height - 280,
                                   16,
                                   0,
                                 ),
@@ -143,11 +139,8 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                                 timeTask: timeController.text,
                                 colorTask: 'mainBlue'),
                           );
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            Routes.homePage,
-                                (route) => false,
-                          );
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -168,11 +161,7 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                                 timeTask: timeController.text,
                                 colorTask: 'mainBlue'),
                           );
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            Routes.homePage,
-                                (route) => false,
-                          );
+                          Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -191,10 +180,10 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                     elevation: 0,
                     shape: const RoundedRectangleBorder(
                         borderRadius: AppUtils.kBorderRadius10),
-                    child: const Text(
-                      'Add',
-                      style:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    child: Text(
+                      widget.args?.fromDetail ?? false ? 'Save' : 'Add',
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -211,7 +200,6 @@ class ColorItem {
 
   ColorItem({required this.name, required this.color});
 }
-
 
 class AddPageArguments {
   final Tasks? taskItem;
