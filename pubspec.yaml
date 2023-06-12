@@ -1,0 +1,53 @@
+name: new_todo_app
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  # bloc state manager
+  flutter_bloc: ^8.1.2
+  # local storage
+  floor: ^1.4.2
+  # equatable
+  equatable: ^2.0.5
+  # intl
+  intl: ^0.18.0
+  # svg picture
+  flutter_svg: ^2.0.5
+  # keyboard
+  keyboard_dismisser: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  floor_generator: ^1.4.2
+  build_runner: ^2.1.2
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+    - assets/svg/
+    - assets/fonts/poppins/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+          weight: 400
