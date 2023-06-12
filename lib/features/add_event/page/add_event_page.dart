@@ -7,9 +7,12 @@ import 'package:new_todo_app/features/add_event/page/mixins/add_tasks_mixin.dart
 import 'package:new_todo_app/features/add_event/widgets/custom_text_field.dart';
 import 'package:new_todo_app/features/home/data/data_source/local_source.dart';
 import 'package:new_todo_app/features/home/data/floor/entity/tasks.dart';
+import 'package:new_todo_app/router/name_routes.dart';
 
 class AddEventPage extends StatefulWidget {
-  const AddEventPage({Key? key}) : super(key: key);
+  final AddPageArguments? args;
+
+  const AddEventPage({Key? key, this.args}) : super(key: key);
 
   @override
   State<AddEventPage> createState() => _AddEventPageState();
@@ -73,7 +76,10 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                                 context: context,
                                 position: RelativeRect.fromLTRB(
                                   16,
-                                  MediaQuery.of(context).size.height - 280,
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height - 280,
                                   16,
                                   0,
                                 ),
@@ -126,25 +132,56 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                   minimum: AppUtils.kPaddingAll16,
                   child: MaterialButton(
                     onPressed: () {
-                      if (nameController.text.isNotEmpty ||
-                          descriptionController.text.isNotEmpty) {
-                        LocalSource.getInstance().insertTask(
-                          Tasks(
-                              nameTask: nameController.text,
-                              descriptionTask: descriptionController.text,
-                              locationTask: locationController.text,
-                              timeTask: timeController.text,
-                              colorTask: 'mainBlue'),
-                        );
-                        Navigator.pop(context);
+                      if (widget.args?.fromDetail ?? false) {
+                        if (nameController.text.isNotEmpty ||
+                            descriptionController.text.isNotEmpty) {
+                          LocalSource.getInstance().updateTask(
+                            Tasks(
+                                nameTask: nameController.text,
+                                descriptionTask: descriptionController.text,
+                                locationTask: locationController.text,
+                                timeTask: timeController.text,
+                                colorTask: 'mainBlue'),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.homePage,
+                                (route) => false,
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: AppColors.orange,
+                              content: Text('Please write event'),
+                              duration: Duration(milliseconds: 150),
+                            ),
+                          );
+                        }
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: AppColors.orange,
-                            content: Text('Please write event'),
-                            duration: Duration(milliseconds: 150),
-                          ),
-                        );
+                        if (nameController.text.isNotEmpty ||
+                            descriptionController.text.isNotEmpty) {
+                          LocalSource.getInstance().insertTask(
+                            Tasks(
+                                nameTask: nameController.text,
+                                descriptionTask: descriptionController.text,
+                                locationTask: locationController.text,
+                                timeTask: timeController.text,
+                                colorTask: 'mainBlue'),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.homePage,
+                                (route) => false,
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: AppColors.orange,
+                              content: Text('Please write event'),
+                              duration: Duration(milliseconds: 150),
+                            ),
+                          );
+                        }
                       }
                     },
                     height: 46,
@@ -157,7 +194,7 @@ class _AddEventPageState extends State<AddEventPage> with AddTasksMixin {
                     child: const Text(
                       'Add',
                       style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -173,4 +210,15 @@ class ColorItem {
   final Color color;
 
   ColorItem({required this.name, required this.color});
+}
+
+
+class AddPageArguments {
+  final Tasks? taskItem;
+  final bool? fromDetail;
+
+  AddPageArguments({
+    this.taskItem,
+    this.fromDetail = false,
+  });
 }

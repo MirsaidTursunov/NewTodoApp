@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:new_todo_app/constants/theme/app_colors.dart';
 import 'package:new_todo_app/constants/theme/app_text_style.dart';
 import 'package:new_todo_app/constants/utils/app_utils.dart';
+import 'package:new_todo_app/features/add_event/page/add_event_page.dart';
 import 'package:new_todo_app/features/home/data/data_source/local_source.dart';
 import 'package:new_todo_app/features/home/data/floor/entity/tasks.dart';
+import 'package:new_todo_app/router/name_routes.dart';
 
 class DetailsEventPage extends StatelessWidget {
   final DetailPageArguments args;
@@ -47,7 +49,16 @@ class DetailsEventPage extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.addEventPage,
+                            arguments: AddPageArguments(
+                              taskItem: args.taskItem,
+                              fromDetail: true,
+                            ),
+                          );
+                        },
                         child: Row(
                           children: [
                             SvgPicture.asset('assets/svg/ic_edit.svg'),
@@ -123,7 +134,8 @@ class DetailsEventPage extends StatelessWidget {
                 ),
                 Text(
                   '15 minutes befor',
-                  style: AppTextStyles.text16Weight600.copyWith(color: AppColors.grey7c, fontWeight: FontWeight.w500),
+                  style: AppTextStyles.text16Weight600.copyWith(
+                      color: AppColors.grey7c, fontWeight: FontWeight.w500),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 28.0, bottom: 10),

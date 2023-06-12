@@ -15,10 +15,10 @@ mixin AddTasksMixin  on State<AddEventPage>{
   ];
 
   void initControllers() {
-    nameController = TextEditingController();
-    descriptionController = TextEditingController();
-    locationController = TextEditingController();
-    timeController = TextEditingController();
+    nameController = TextEditingController(text: widget.args?.taskItem?.nameTask);
+    descriptionController = TextEditingController(text: widget.args?.taskItem?.descriptionTask);
+    locationController = TextEditingController(text: widget.args?.taskItem?.locationTask);
+    timeController = TextEditingController(text: widget.args?.taskItem?.timeTask);
   }
 
   void disposeControllers(){

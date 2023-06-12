@@ -5,6 +5,7 @@ import 'package:new_todo_app/constants/theme/app_colors.dart';
 import 'package:new_todo_app/constants/theme/app_text_style.dart';
 import 'package:new_todo_app/constants/utils/app_utils.dart';
 import 'package:new_todo_app/constants/utils/base_utils.dart';
+import 'package:new_todo_app/features/add_event/page/add_event_page.dart';
 import 'package:new_todo_app/features/details_event/page/details_event_page.dart';
 import 'package:new_todo_app/features/home/data/data_source/local_source.dart';
 import 'package:new_todo_app/features/home/data/floor/entity/tasks.dart';
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushNamed(
                                   context,
                                   Routes.addEventPage,
+                                  arguments: AddPageArguments(),
                                 );
                               },
                               height: 30,

@@ -21,10 +21,13 @@ class AppRoutes {
           builder: (_) => const HomePage(),
         );
       case Routes.addEventPage:
+        final AddPageArguments args = settings.arguments as AddPageArguments;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => AddEventBloc(),
-            child: const AddEventPage(),
+            child: AddEventPage(
+              args: args,
+            ),
           ),
         );
       case Routes.detailsEventPage:
